@@ -8,7 +8,8 @@ ENV PATH="/code/.venv/bin:$PATH" \
 
 WORKDIR /code
 COPY pyproject.toml uv.lock .python-version ./
-RUN uv sync --locked --no-dev
+# RUN uv sync --locked --no-dev
+RUN UV_HTTP_TIMEOUT=120 UV_HTTP_RETRIES=5 uv sync --locked --no-dev
 
 COPY model.py predict.py feature_defaults.json model_metadata.json pipeline.bin q6_test.py ./
 
